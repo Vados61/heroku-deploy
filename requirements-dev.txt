@@ -4,5 +4,5 @@ pytest-django
 model_bakery
 gunicorn
 flake8
-django_heroku
+django-heroku
 python-dotenv
