@@ -1,0 +1,57 @@
+name: Django Testing and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: admin1
+      POSTGRES_PASS: admin1_pass
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: cicd_test
+      SECRET_KEY: oaamn^2=a4%p57jkt%&6rcird)lb6-#fo)^6rram7d+_@=8e38
+      ALLOWED_HOSTS: localhost,127.0.0.1
+    services:
+      postgres_main:
+        image: postgres:12
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASS }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Проверяем репозиторий на наличие изменений
+        uses: actions/checkout@v2
+
+      - name: Установка python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Установка библиотек
+        run: pip3 install --no-cache-dir --upgrade -r requirements-dev.txt
+
+      - name: Линтинг кода
+        run: |
+          flake8 students  
+          flake8 django_testing
+
+      - name: Тестинг
+        run: pytest
+        env:
+         SECRET_KEY: ${{ env.SECRET_KEY }}
+         DEBUG: "1"
+         ALLOWED_HOSTS: ${{ env.ALLOWED_HOSTS }}
+         DB_NAME: ${{ env.POSTGRES_DB }}
+         DB_USER: ${{ env.POSTGRES_USER }}
+         DB_PASSWORD: ${{ env.POSTGRES_PASS }}
+         DB_HOST: ${{ env.POSTGRES_HOST }}
