@@ -5,4 +5,4 @@ model_bakery
 gunicorn
 flake8
 django_heroku
-requests
+python-dotenv
