@@ -1,8 +1,0 @@
--r requirements.txt
-pytest
-pytest-django
-model_bakery
-gunicorn
-flake8
-django-heroku
-python-dotenv

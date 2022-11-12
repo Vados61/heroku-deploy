@@ -39,7 +39,7 @@ jobs:
           python-version: 3.9
 
       - name: Установка библиотек
-        run: pip3 install --no-cache-dir --upgrade -r requirements-dev.txt
+        run: pip3 install --no-cache-dir --upgrade -r requirements.txt
 
       - name: Линтинг кода
         run: |
