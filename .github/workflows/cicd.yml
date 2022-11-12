@@ -12,7 +12,7 @@ jobs:
       POSTGRES_PASS: admin1_pass
       POSTGRES_PORT: 5432
       POSTGRES_DB: cicd_test
-      POSTGRES_HOST: postgres_main
+      POSTGRES_HOST: localhost
       SECRET_KEY: oaamn^2=a4%p57jkt%&6rcird)lb6-#fo)^6rram7d+_@=8e38
       ALLOWED_HOSTS: localhost,127.0.0.1
     services:
